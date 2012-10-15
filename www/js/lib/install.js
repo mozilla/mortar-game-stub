@@ -4,9 +4,9 @@
 define(function (require) {
     'use strict';
 
-    var $ = require('jquery'),
-        dispatcher = $({}),
-        prop;
+    var $ = require('zepto');
+    var dispatcher = $('<div>');
+    var prop;
 
     //Create event functions based on dispatcher object
     function createDispatchFn(id) {
@@ -33,7 +33,7 @@ define(function (require) {
 
     function triggerChange(state) {
         install.state = state;
-        install.trigger('change', install.state);
+        install.trigger('my:change', install.state);
     }
 
     /**

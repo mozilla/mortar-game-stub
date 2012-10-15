@@ -18,7 +18,7 @@ define(function(require) {
             install();
         });
 
-        install.on('change', update);
+        install.on('my:change', update);
 
         install.on('error', function(e, err) {
             // Feel free to customize this
