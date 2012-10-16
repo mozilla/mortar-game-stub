@@ -4,17 +4,6 @@
 define(function (require) {
     'use strict';
 
-    var $ = require('zepto');
-    var dispatcher = $('<div>');
-    var prop;
-
-    //Create event functions based on dispatcher object
-    function createDispatchFn(id) {
-        return function () {
-            return dispatcher[id].apply(dispatcher, arguments);
-        };
-    }
-
     /**
      * Detects if the current app has been installed.
      *
@@ -33,7 +22,7 @@ define(function (require) {
 
     function triggerChange(state) {
         install.state = state;
-        install.trigger('my:change', install.state);
+        install.trigger('change', install.state);
     }
 
     /**
@@ -125,9 +114,36 @@ define(function (require) {
     };
 
     //Allow install to do events.
-    install.on = createDispatchFn('on');
-    install.off = createDispatchFn('off');
-    install.trigger = createDispatchFn('trigger');
+    var events = {};
+
+    install.on = function(name, func) {
+        events[name] = (events[name] || []).concat([func]);
+    };
+
+    install.off = function(name, func) {
+        if(events[name]) {
+            var res = [];
+
+            for(var i=0, l=events[name].length; i<l; i++) {
+                var f = events[name][i];
+                if(f != func) {
+                    res.push();
+                }
+            }
+
+            events[name] = res;
+        }
+    };
+
+    install.trigger = function(name) {
+        var args = Array.prototype.slice.call(arguments, 1);
+
+        if(events[name]) {
+            for(var i=0, l=events[name].length; i<l; i++) {
+                events[name][i].apply(this, args);
+            }
+        }
+    };
 
 
     //Start up the checks
