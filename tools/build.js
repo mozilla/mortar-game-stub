@@ -1,14 +1,10 @@
-({ 
-    appDir: "../www",
+({
     baseUrl: "js/lib",
+    map: { '*': { 'jquery': 'zepto' } },
     dir: "../www-built",
+    appDir: "../www",
     removeCombined: true,
-    paths: {
-        "app": "../app"
-    },
     modules: [
-        { name: "app" }
+        { name: "../app" }
     ]
 })
-    
-        
