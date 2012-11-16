@@ -1,5 +1,0 @@
-
-h1. A Blank Template for Open Web Apps
-
-The is a minimal template that has a little HTML, CSS, and js to help
-you start writing an Open Web App.
