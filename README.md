@@ -11,8 +11,8 @@ template collection for building Open Web Apps.
 
 There are a few ways to get this template:
 
-* git clone git://github.com/mozilla/mortar-list-detail.git myapp
-* volo create myapp mozilla/mortar-list-detail
+* git clone git@github.com:mozilla/mortar-game-stub.git myapp
+* volo create myapp mozilla/mortar-game-stub
 
 If you have node installed, you can run a development server with volo:
 
