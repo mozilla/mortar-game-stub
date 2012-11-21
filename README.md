@@ -1,8 +1,11 @@
 
-# A Blank Template for Open Web Apps
+# A Simple Web Game
 
-The is a minimal template that has a little HTML, CSS, and js to help
-you start writing an Open Web App.
+The is a small template that comes with a working game where you can
+move the player around. Use this to start your game!
+
+This is part of the [mortar](https://github.com/mozilla/mortar/)
+template collection for building Open Web Apps.
 
 # Usage
 
