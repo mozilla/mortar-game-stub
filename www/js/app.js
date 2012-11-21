@@ -40,6 +40,7 @@ define(function(require) {
     canvas.height = 480;
     document.body.appendChild(canvas);
 
+    // The player's state
     var player = {
         x: 0,
         y: 0,
@@ -52,6 +53,17 @@ define(function(require) {
         player.x = 0;
         player.y = 0;
     };
+
+    // Pause and unpause
+    function pause() {
+        running = false;
+    }
+
+    function unpause() {
+        running = true;
+        then = Date.now();
+        main();
+    }
 
     // Update game objects
     function update(dt) {
@@ -87,7 +99,11 @@ define(function(require) {
     };
 
     // The main game loop
-    var main = function () {
+    function main() {
+        if(!running) {
+            return;
+        }
+
         var now = Date.now();
         var dt = (now - then) / 1000.0;
 
@@ -98,9 +114,18 @@ define(function(require) {
         requestAnimFrame(main);
     };
 
+    // Don't run the game when the tab isn't visible
+    window.addEventListener('focus', function() {
+        unpause();
+    });
+
+    window.addEventListener('blur', function() {
+        pause();
+    });
+
     // Let's play this game!
     reset();
     var then = Date.now();
+    var running = true;
     main();
 });
-

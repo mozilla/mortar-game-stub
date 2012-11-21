@@ -19,4 +19,4 @@ If you have node installed, you can run a development server with volo:
 * cd myapp
 * volo serve
 
-View the list/detail app at http://localhost:8008/.
+View the game at http://localhost:8008/.

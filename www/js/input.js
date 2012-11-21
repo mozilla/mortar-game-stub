@@ -33,6 +33,10 @@ define(function(require) {
         setKey(e, false);
     });
 
+    window.addEventListener('blur', function() {
+        pressedKeys = {};
+    });
+
     return {
         isDown: function(key) {
             return pressedKeys[key];
