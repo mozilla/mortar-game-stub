@@ -4,6 +4,9 @@
 The is a small template that comes with a working game where you can
 move the player around. Use this to start your game!
 
+If you look in `www/js/app.js,` you'll see that this comes with a
+basic render loop, a player enttiy, and an input library.
+
 This is part of the [mortar](https://github.com/mozilla/mortar/)
 template collection for building Open Web Apps.
 
