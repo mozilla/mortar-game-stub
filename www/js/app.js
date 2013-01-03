@@ -87,6 +87,10 @@ define(function(require) {
         if(input.isDown('RIGHT')) {
             player.x += playerSpeed * dt;
         }
+
+        // You can pass any letter to `isDown`, in addition to DOWN,
+        // UP, LEFT, RIGHT, and SPACE:
+        // if(input.isDown('a')) { ... }
     };
 
     // Draw everything
