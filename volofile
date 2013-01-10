@@ -165,7 +165,7 @@ module.exports = {
             .fail(d.reject);
     },
 
-    serve: function(d, v, namedArgs) {
+    serve: function(d, v, namedArgs, port) {
         try {
             var connect = require('connect');
         }
@@ -178,7 +178,7 @@ module.exports = {
 
         var lessMiddleware = require('less-middleware');
 
-        var port = 8008;
+        var port = port || 8008;
         var base = path.join(process.cwd(), namedArgs.base || 'www');
         var middleware = [
             lessMiddleware({ src: base }),
