@@ -19,7 +19,7 @@ define(function(require) {
             key = 'DOWN'; break;
         default:
             // Convert ASCII codes to letters
-            key = String.fromCharCode(e.keyCode);
+            key = String.fromCharCode(event.keyCode);
         }
 
         pressedKeys[key] = status;
