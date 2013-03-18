@@ -1,6 +1,8 @@
 
 # A Simple Web Game
 
+**Warning**: the contents in this tempate are deprected, and will soon be replaced by a much different structure. Volo and several other things will be removed to offer a simpler and more extensible template.
+
 The is a small template that comes with a working game where you can
 move the player around. Use this to start your game!
 
