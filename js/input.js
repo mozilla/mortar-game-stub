@@ -1,5 +1,5 @@
+var GameInput = (function() {
 
-define(function(require) {
     var pressedKeys = {};
 
     function setKey(event, status) {
@@ -42,4 +42,4 @@ define(function(require) {
             return pressedKeys[key];
         }
     };
-});
+})();

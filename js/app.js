@@ -1,37 +1,25 @@
 
-// This uses require.js to structure javascript:
-// http://requirejs.org/docs/api.html#define
+window.onload = function() {
 
-// A cross-browser requestAnimationFrame
-// See https://hacks.mozilla.org/2011/08/animating-with-javascript-from-setinterval-to-requestanimationframe/
-var requestAnimFrame = (function(){
-    return window.requestAnimationFrame       ||
-        window.webkitRequestAnimationFrame ||
-        window.mozRequestAnimationFrame    ||
-        window.oRequestAnimationFrame      ||
-        window.msRequestAnimationFrame     ||
-        function(callback){
-            window.setTimeout(callback, 1000 / 60);
-        };
-})();
+    // A cross-browser requestAnimationFrame
+    // See https://hacks.mozilla.org/2011/08/animating-with-javascript-from-setinterval-to-requestanimationframe/
+    var requestAnimFrame = (function(){
+        return window.requestAnimationFrame       ||
+            window.webkitRequestAnimationFrame ||
+            window.mozRequestAnimationFrame    ||
+            window.oRequestAnimationFrame      ||
+            window.msRequestAnimationFrame     ||
+            function(callback){
+                window.setTimeout(callback, 1000 / 60);
+            };
+    })();
 
-define(function(require) {
-    // Zepto provides nice js and DOM methods (very similar to jQuery,
-    // and a lot smaller):
-    // http://zeptojs.com/
-    var $ = require('zepto');
-
-    // Need to verify receipts? This library is included by default.
-    // https://github.com/mozilla/receiptverifier
-    require('receiptverifier');
-
-    // Want to install the app locally? This library hooks up the
+    /*// Want to install the app locally? This library hooks up the
     // installation button. See <button class="install-btn"> in
     // index.html
-    require('./install-button');
+    require('./install-button');*/
 
-    // Simple input library for our game
-    var input = require('./input');
+
 
     // Create the canvas
     var canvas = document.createElement("canvas");
@@ -48,11 +36,30 @@ define(function(require) {
         sizeY: 50
     };
 
+    // Don't run the game when the tab isn't visible
+    window.addEventListener('focus', function() {
+        unpause();
+    });
+
+    window.addEventListener('blur', function() {
+        pause();
+    });
+
+    // Let's play this game!
+    reset();
+    var then = Date.now();
+    var running = true;
+    main();
+
+
+    // Functions ---
+
+
     // Reset game to original state
     function reset() {
         player.x = 0;
         player.y = 0;
-    };
+    }
 
     // Pause and unpause
     function pause() {
@@ -65,33 +72,35 @@ define(function(require) {
         main();
     }
 
-    // Update game objects
+    // Update game objects.
+    // We'll use GameInput to detect which keys are down.
+    // If you look at the bottom of index.html we load GameInput before app.js
     function update(dt) {
         // Speed in pixels per second
         var playerSpeed = 100;
 
-        if(input.isDown('DOWN')) {
+        if(GameInput.isDown('DOWN')) {
             // dt is the number of seconds passed, so multiplying by
-            // the speed gives u the number of pixels to move
+            // the speed gives you the number of pixels to move
             player.y += playerSpeed * dt;
         }
 
-        if(input.isDown('UP')) {
+        if(GameInput.isDown('UP')) {
             player.y -= playerSpeed * dt;
         }
 
-        if(input.isDown('LEFT')) {
+        if(GameInput.isDown('LEFT')) {
             player.x -= playerSpeed * dt;
         }
 
-        if(input.isDown('RIGHT')) {
+        if(GameInput.isDown('RIGHT')) {
             player.x += playerSpeed * dt;
         }
 
         // You can pass any letter to `isDown`, in addition to DOWN,
         // UP, LEFT, RIGHT, and SPACE:
-        // if(input.isDown('a')) { ... }
-    };
+        // if(GameInput.isDown('a')) { ... }
+    }
 
     // Draw everything
     function render() {
@@ -100,7 +109,7 @@ define(function(require) {
 
         ctx.fillStyle = 'green';
         ctx.fillRect(player.x, player.y, player.sizeX, player.sizeY);
-    };
+    }
 
     // The main game loop
     function main() {
@@ -116,20 +125,7 @@ define(function(require) {
 
         then = now;
         requestAnimFrame(main);
-    };
+    }
 
-    // Don't run the game when the tab isn't visible
-    window.addEventListener('focus', function() {
-        unpause();
-    });
 
-    window.addEventListener('blur', function() {
-        pause();
-    });
-
-    // Let's play this game!
-    reset();
-    var then = Date.now();
-    var running = true;
-    main();
-});
+};
