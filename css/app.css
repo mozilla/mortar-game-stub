@@ -1,12 +1,3 @@
-
-/* Tip: Use "@import" to add styles instead of adding <link>'s in your
-   HTML, and volo will inline it when building for production */
-
-/* Styles for the installation button */
-@import "install-button.css";
-
-/* Your styles here */
-
 html, body {
     margin: 0;
     padding: 0;
@@ -15,4 +6,13 @@ html, body {
 canvas {
     display: block;
     margin: 0 auto;
+}
+
+#install {
+  color: #080;
+}
+
+#install.hidden {
+  opacity: 0.25;
+  color: #f00;
 }
