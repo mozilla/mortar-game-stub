@@ -4,6 +4,7 @@ This is a small game template including a basic render loop where you can move t
 
 This is part of the [mortar](https://github.com/mozilla/mortar/) template collection for building [Open Web Apps](https://developer.mozilla.org/en-US/Apps).
 
+
 ## Downloading
 
 There are a few ways to get this template:
@@ -19,7 +20,18 @@ Or download the latest version in this [ZIP file](https://github.com/mozilla/mor
 
 ## Usage
 
-Open ````index.html```` in your browser to run the game. Alternatively, since we include a `manifest.webapp` file, you can also install the app in your Firefox OS device or simulator using the [App Manager](https://developer.mozilla.org/en-US/Firefox_OS/Using_the_App_Manager).
+Start a local server to simulate accessing the hosted app from the browser, and trying the *Install* button flow.
+
+For example:
+
+````bash
+python -m SimpleHTTPServer 8000
+````
+
+then access `localhost:8000` using Firefox (Desktop or Mobile), or the Browser app in a Firefox OS simulator (or device). Change the port accordingly, if you're running a webserver in this port already.
+
+
+## Code walkthrough
 
 The game logic is defined in `js/app.js`. This is where we define the player entity, and set up the render loop, and the input and install handlers. In the interest of keeping things tidy and easy to follow, we have extracted the code for `input` and `install` onto two files (`js/input.js` and `js/install.js`) that we then reference in `index.html`, right before `js/app.js`.
 
