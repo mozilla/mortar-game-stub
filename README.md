@@ -28,7 +28,9 @@ For example:
 python -m SimpleHTTPServer 8000
 ````
 
-then access `localhost:8000` using Firefox (Desktop or Mobile), or the Browser app in a Firefox OS simulator (or device). Change the port accordingly, if you're running a webserver in this port already.
+then access `localhost:8000` or `your.computer.ip:8000` (for example, `192.168.0.25`) using Firefox (Desktop or Mobile), or the Browser app in a Firefox OS simulator (or device).
+
+You'll need to use the IP address when using a physical device. Change the port accordingly, if you're running a webserver in this port already.
 
 
 ## Code walkthrough
