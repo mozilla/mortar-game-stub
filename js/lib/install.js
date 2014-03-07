@@ -1,153 +1,73 @@
-/*jslint nomen: true */
-/*global define, navigator, location, window, chrome */
+var AppInstall = (function() {
 
-define(function (require) {
-    'use strict';
+  function guessManifestPath() {
 
-    /**
-     * Detects if the current app has been installed.
-     *
-     * See https://github.com/wavysandbox/install/blob/master/README.md
-     * for details on how to use.
-     *
-     */
-    function install() {
-        var fn = install[install.type + 'Install'];
-        if (fn) {
-            fn();
-        } else {
-            install.trigger('error', 'unsupported install: ' + install.type);
-        }
+    var loc = window.location;
+
+    var pathname = window.location.pathname;
+
+    if(pathname !== '/') {
+      var parts = pathname.split('/');
+      var lastPart = parts.pop();
+      
+      if(lastPart.indexOf('.') !== -1) {
+        // the last part is not a directory, so we'll ignore it when guessing the path
+        pathname = parts.join('/');
+      }
     }
 
-    function triggerChange(state) {
-        install.state = state;
-        install.trigger('change', install.state);
+    if(pathname[pathname.length - 1] !== '/') {
+      pathname += '/';
     }
 
-    /**
-     *  The install state. Values are:
-     *  'unknown': the code has not tried to detect any state.
-     *
-     * @type {String}
-     */
-    install.state = 'unknown';
+    return loc.protocol + '//' + loc.host + pathname + 'manifest.webapp';
 
-    install.check = function () {
-        var apps = navigator.mozApps,
-            request;
+  }
 
-        if (navigator.mozApps) {
-            //Mozilla web apps
-            install.type = 'mozilla';
-            request = navigator.mozApps.getSelf();
-            request.onsuccess = function () {
-                if (this.result) {
-                    triggerChange('installed');
-                } else {
-                    triggerChange('uninstalled');
-                }
-            };
 
-            request.onerror = function (err) {
-                // Just console log it, no need to bother the user.
-                install.error = err;
-                triggerChange('error');
-            };
+  function isInstallable() {
+    return(navigator.mozApps !== undefined);
+  }
 
-        } else if (typeof chrome !== 'undefined' &&
-                   chrome.webstore &&
-                   chrome.app) {
-            //Chrome web apps
-            install.type = 'chromeStore';
-            if (chrome.app.isInstalled) {
-                triggerChange('installed');
-            } else {
-                triggerChange('uninstalled');
-            }
-        } else if (typeof window.navigator.standalone !== 'undefined') {
-            install.type = 'ios';
-            if (window.navigator.standalone) {
-                triggerChange('installed');
-            } else {
-                triggerChange('uninstalled');
-            }
-        } else {
-            install.type = 'unsupported';
-            triggerChange('unsupported');
-        }
+
+  function isInstalled(manifestPath, callback) {
+
+    var request = navigator.mozApps.checkInstalled(manifestPath);
+
+    request.onerror = function() {
+      callback('Error checking for installed app: ' + request.error.name);
     };
 
-    /* Mozilla/Firefox installation */
-    install.mozillaInstallUrl = location.href + 'manifest.webapp';
-    install.mozillaInstall = function () {
-        var installRequest = navigator.mozApps.install(install.mozillaInstallUrl);
-
-        installRequest.onsuccess = function (data) {
-            triggerChange('installed');
-        };
-
-        installRequest.onerror = function (err) {
-            install.error = err;
-            triggerChange('error');
-        };
+    request.onsuccess = function() {
+      // If the app is installed, you'll get a mozApp object in `request.result`,
+      // else `request.result` is null
+      callback(false, request.result !== null);
     };
 
-    /* Chrome installation */
-    install.chromeInstallUrl = null;
-    install.chromeInstall = function () {
-        chrome.webstore.install(install.chromeInstallUrl,
-            function () {
-                triggerChange('installed');
-            }, function (err) {
-                install.error = err;
-                triggerChange('error');
-            });
+  }
+
+
+  function install(manifestPath, callback) {
+
+    var installRequest = navigator.mozApps.install(manifestPath);
+
+    installRequest.onsuccess = function() {
+      // No error
+      callback(false);
     };
 
-    /* iOS installation */
-    //Right now, just asks that something show a UI
-    //element mentioning how to install using the Safari
-    //"Add to Home Screen" button.
-    install.iosInstall = function () {
-        install.trigger('showiOSInstall', navigator.platform.toLowerCase());
+    installRequest.onerror = function() {
+      callback('Error installing the app: ' + installRequest.error.name);
     };
 
-    //Allow install to do events.
-    var events = {};
-
-    install.on = function(name, func) {
-        events[name] = (events[name] || []).concat([func]);
-    };
-
-    install.off = function(name, func) {
-        if(events[name]) {
-            var res = [];
-
-            for(var i=0, l=events[name].length; i<l; i++) {
-                var f = events[name][i];
-                if(f != func) {
-                    res.push();
-                }
-            }
-
-            events[name] = res;
-        }
-    };
-
-    install.trigger = function(name) {
-        var args = Array.prototype.slice.call(arguments, 1);
-
-        if(events[name]) {
-            for(var i=0, l=events[name].length; i<l; i++) {
-                events[name][i].apply(this, args);
-            }
-        }
-    };
+  }
 
 
-    //Start up the checks
-    install.check();
+  return {
+    guessManifestPath: guessManifestPath,
+    install: install,
+    isInstalled: isInstalled,
+    isInstallable: isInstallable
+  };
 
-    return install;
-});
+}());

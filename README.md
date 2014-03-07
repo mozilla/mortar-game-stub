@@ -1,4 +1,4 @@
-# A Simple Web Game
+# Game Stub
 
 This is a small game template including a basic render loop where you can move the player around.
 

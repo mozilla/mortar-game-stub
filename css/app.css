@@ -1,18 +1,13 @@
 html, body {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 canvas {
-    display: block;
-    margin: 0 auto;
-}
-
-#install {
-  color: #080;
+  display: block;
+  margin: 0 auto;
 }
 
 #install.hidden {
-  opacity: 0.25;
-  color: #f00;
+  display: none;
 }

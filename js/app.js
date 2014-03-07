@@ -3,8 +3,8 @@ window.onload = function() {
 
     // A cross-browser requestAnimationFrame
     // See https://hacks.mozilla.org/2011/08/animating-with-javascript-from-setinterval-to-requestanimationframe/
-    var requestAnimFrame = (function(){
-        return window.requestAnimationFrame       ||
+    var requestAnimFrame = (function() {
+        return window.requestAnimationFrame    ||
             window.webkitRequestAnimationFrame ||
             window.mozRequestAnimationFrame    ||
             window.oRequestAnimationFrame      ||
@@ -14,26 +14,55 @@ window.onload = function() {
             };
     })();
 
-    /*// Want to install the app locally? This library hooks up the
-    // installation button. See <button class="install-btn"> in
-    // index.html
-    require('./install-button');*/
+    // Install logic
+    // If the app has already been installed, we don't do anything.
+    // Otherwise we'll show the button, and hide it when/if the user installs the app.
+    var installButton = document.getElementById('install');
+    var manifestPath = AppInstall.guessManifestPath();
 
+    if(AppInstall.isInstallable()) {
+
+      // checking for app installed is an asynchronous process
+      AppInstall.isInstalled(manifestPath, function isInstalledCb(err, result) {
+
+        if(!err && !result) {
+
+          // No errors, and the app is not installed, so we can show the install button,
+          // and set up the click handler as well.
+          installButton.classList.remove('hidden');
+
+          installButton.addEventListener('click', function() {
+
+            AppInstall.install(manifestPath, function(err) {
+              if(!err) {
+                installButton.classList.add('hidden');
+              } else {
+                alert('The app cannot be installed: ' + err);
+              }
+            });
+
+          }, false);
+
+        }
+
+      });
+
+    }
 
 
     // Create the canvas
     var canvas = document.createElement("canvas");
     var ctx = canvas.getContext("2d");
-    canvas.width = 512;
-    canvas.height = 480;
+    canvas.width = 320;
+    canvas.height = 240;
     document.body.appendChild(canvas);
 
     // The player's state
     var player = {
         x: 0,
         y: 0,
-        sizeX: 50,
-        sizeY: 50
+        sizeX: 30,
+        sizeY: 30
     };
 
     // Don't run the game when the tab isn't visible
