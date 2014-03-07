@@ -1,7 +1,7 @@
 {
   "version": "0.1",
-  "name": "My App",
-  "description": "Your new awesome Open Web App",
+  "name": "Game Stub",
+  "description": "A hosted game app template",
   "launch_path": "/index.html",
   "icons": {
     "16": "/img/icons/mortar-16.png",
@@ -10,22 +10,15 @@
   },
   "developer": {
     "name": "Your Name",
-    "url": "http://yourawesomeapp.com"
+    "url": "http://example.com"
   },
   "installs_allowed_from": ["*"],
-  "appcache_path": "/cache.manifest",
   "locales": {
     "es": {
-      "description": "Su nueva aplicación impresionante Open Web",
-      "developer": {
-        "url": "http://yourawesomeapp.com"
-      }
+      "description": "Su nueva e impresionante aplicación"
     },
     "it": {
-      "description": "Il vostro nuovo fantastico Open Web App",
-      "developer": {
-        "url": "http://yourawesomeapp.com"
-      }
+      "description": "Il vostro nuovo fantastico App"
     }
   },
   "default_locale": "en"
