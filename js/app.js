@@ -51,11 +51,12 @@ window.onload = function() {
 
 
     // Create the canvas
+    var mainContainer = document.querySelector('main');
     var canvas = document.createElement("canvas");
     var ctx = canvas.getContext("2d");
     canvas.width = 320;
     canvas.height = 240;
-    document.body.appendChild(canvas);
+    mainContainer.appendChild(canvas);
 
     // The player's state
     var player = {
@@ -103,7 +104,8 @@ window.onload = function() {
 
     // Update game objects.
     // We'll use GameInput to detect which keys are down.
-    // If you look at the bottom of index.html, we load GameInput before app.js
+    // If you look at the bottom of index.html, we load GameInput
+    // from js/input.js right before app.js
     function update(dt) {
         // Speed in pixels per second
         var playerSpeed = 100;

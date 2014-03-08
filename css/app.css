@@ -1,13 +1,38 @@
 html, body {
+    height: 100%;
+}
+body {
   margin: 0;
-  padding: 0;
 }
 
-canvas {
-  display: block;
-  margin: 0 auto;
+body {
+    font-family: Helvetica, Arial, sans;
+    background: linear-gradient(0deg, #aaa, #ccc 30%, #fff);
+    background-size: 100% 100%;
+    background-repeat: none;
+}
+
+main {
+  padding: 0.5rem;
+}
+
+h1 {
+    margin: 0 0 0.5rem 0;
+}
+
+p {
+    margin: 0.5rem 0;
+}
+
+#install {
+  font-size: 1rem;
 }
 
 #install.hidden {
   display: none;
 }
+
+canvas {
+  display: block;
+}
+
