@@ -37,9 +37,14 @@ var GameInput = (function() {
     pressedKeys = {};
   });
 
+
+  function isDown(key) {
+    return pressedKeys[key];
+  }
+
+
   return {
-    isDown: function(key) {
-      return pressedKeys[key];
-    }
+    isDown: isDown
   };
+
 })();
