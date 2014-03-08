@@ -1,45 +1,45 @@
 var GameInput = (function() {
 
-    var pressedKeys = {};
+  var pressedKeys = {};
 
-    function setKey(event, status) {
-        var code = event.keyCode;
-        var key;
+  function setKey(event, status) {
+    var code = event.keyCode;
+    var key;
 
-        switch(code) {
-        case 32:
-            key = 'SPACE'; break;
-        case 37:
-            key = 'LEFT'; break;
-        case 38:
-            key = 'UP'; break;
-        case 39:
-            key = 'RIGHT'; break;
-        case 40:
-            key = 'DOWN'; break;
-        default:
-            // Convert ASCII codes to letters
-            key = String.fromCharCode(event.keyCode);
-        }
-
-        pressedKeys[key] = status;
+    switch(code) {
+      case 32:
+        key = 'SPACE'; break;
+      case 37:
+        key = 'LEFT'; break;
+      case 38:
+        key = 'UP'; break;
+      case 39:
+        key = 'RIGHT'; break;
+      case 40:
+        key = 'DOWN'; break;
+      default:
+        // Convert ASCII codes to letters
+        key = String.fromCharCode(event.keyCode);
     }
 
-    document.addEventListener('keydown', function(e) {
-        setKey(e, true);
-    });
+    pressedKeys[key] = status;
+  }
 
-    document.addEventListener('keyup', function(e) {
-        setKey(e, false);
-    });
+  document.addEventListener('keydown', function(e) {
+    setKey(e, true);
+  });
 
-    window.addEventListener('blur', function() {
-        pressedKeys = {};
-    });
+  document.addEventListener('keyup', function(e) {
+    setKey(e, false);
+  });
 
-    return {
-        isDown: function(key) {
-            return pressedKeys[key];
-        }
-    };
+  window.addEventListener('blur', function() {
+    pressedKeys = {};
+  });
+
+  return {
+    isDown: function(key) {
+      return pressedKeys[key];
+    }
+  };
 })();
