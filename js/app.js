@@ -174,17 +174,17 @@ window.onload = function() {
         ];
         // Minimum scale
         var scale = Math.min(
-                browser[0] / initialCanvasWidth,
-                browser[1] / initialCanvasHeight);
+            browser[0] / initialCanvasWidth,
+            browser[1] / initialCanvasHeight);
         // Scaled content size
         var size = [
-                initialCanvasWidth * scale,
-                initialCanvasHeight * scale
+            initialCanvasWidth * scale,
+            initialCanvasHeight * scale
         ];
         // Offset from top/left
         var offset = [
-                (browser[0] - size[0]) / 2,
-                (browser[1] - size[1]) / 2
+            (browser[0] - size[0]) / 2,
+            (browser[1] - size[1]) / 2
         ];
 
         // Apply CSS transform

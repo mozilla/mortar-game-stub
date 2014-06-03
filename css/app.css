@@ -7,10 +7,6 @@ html, body {
 }
 
 body {
-  margin: 0;
-}
-
-body {
     font-family: Helvetica, Arial, sans;
     background: linear-gradient(0deg, #aaa, #ccc 30%, #fff);
     background-size: 100% 100%;
@@ -33,17 +29,17 @@ p {
 }
 
 #install {
-  font-size: 1rem;
+    font-size: 1rem;
     position: absolute;
     bottom: 0;
 }
 
 #install.hidden, div.info.hidden {
-  display: none;
+    display: none;
 }
 
 canvas {
-  display: block;
+    display: block;
 }
 
 div.info {
