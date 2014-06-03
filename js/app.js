@@ -53,11 +53,15 @@ window.onload = function() {
     // Create the canvas
     var mainContainer = document.querySelector('main');
     var canvas = document.createElement("canvas");
+    var infoContainer = document.querySelector('div.info');
     var ctx = canvas.getContext("2d");
-    canvas.width = 320;
-    canvas.height = 240;
+    var initialCanvasWidth = canvas.width = 320;
+    var initialCanvasHeight = canvas.height = 480;
     mainContainer.appendChild(canvas);
 
+    infoContainer.addEventListener('click', function(ev) {
+        infoContainer.classList.add('hidden');
+    });
     // The player's state
     var player = {
         x: 0,
@@ -75,6 +79,10 @@ window.onload = function() {
         pause();
     });
 
+    window.addEventListener('resize', resize);
+
+    //Initially resize the game canvas.
+    resize();
     // Let's play this game!
     reset();
     var then = Date.now();
@@ -158,5 +166,31 @@ window.onload = function() {
         requestAnimFrame(main);
     }
 
+    // based on: https://hacks.mozilla.org/2013/05/optimizing-your-javascript-game-for-firefox-os/
+    function resize() {
+        var browser = [
+            window.innerWidth,
+            window.innerHeight
+        ];
+        // Minimum scale
+        var scale = Math.min(
+                browser[0] / initialCanvasWidth,
+                browser[1] / initialCanvasHeight);
+        // Scaled content size
+        var size = [
+                initialCanvasWidth * scale,
+                initialCanvasHeight * scale
+        ];
+        // Offset from top/left
+        var offset = [
+                (browser[0] - size[0]) / 2,
+                (browser[1] - size[1]) / 2
+        ];
+
+        // Apply CSS transform
+        var rule = "translate(" + offset[0] + "px, " + offset[1] + "px) scale(" + scale + ")";
+        mainContainer.style.transform = rule;
+        mainContainer.style.webkitTransform = rule;
+    }
 
 };

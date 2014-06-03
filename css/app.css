@@ -1,6 +1,11 @@
 html, body {
+    width: 100%;
     height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
 }
+
 body {
   margin: 0;
 }
@@ -13,7 +18,10 @@ body {
 }
 
 main {
-  padding: 0.5rem;
+    transform-origin: 0 0;
+    -webkit-transform-origin: 0 0;
+    user-select: none;
+    -webkit-user-select: none;
 }
 
 h1 {
@@ -26,9 +34,11 @@ p {
 
 #install {
   font-size: 1rem;
+    position: absolute;
+    bottom: 0;
 }
 
-#install.hidden {
+#install.hidden, div.info.hidden {
   display: none;
 }
 
@@ -36,3 +46,9 @@ canvas {
   display: block;
 }
 
+div.info {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(255,255,255,0.8);
+}
